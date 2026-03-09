@@ -42,8 +42,6 @@ The model was evaluated using a **Precision-Recall (PR) Curve** rather than a st
 
 That is a fantastic set of results to present for your interview. You have moved from a model that was essentially "silent" (10% recall) to a highly effective early-warning system (81% recall) while maintaining an impressive **0.91 precision**.
 
-Here is a structured analysis of your results, formatted as a "Discussion of Results" section for your final report or README.
-
 ---
 
 ##  Analysis of Results
