@@ -46,14 +46,14 @@ That is a fantastic set of results to present for your interview. You have moved
 
 ##  Analysis of Results
 
-### 1. Modeling Choices & Design Philosophy
+### 1. Modeling Choices
 
 The core challenge was to detect a **non-linear, state-based incident** hidden within a noisy, imbalanced dataset.
 
 * **Model Selection:** XGBoost was chosen for its ability to learn complex feature interactions (e.g., *Metric A* rising while *Metric B* falling) that simple linear models or single-threshold alerts would miss.
 * **Feature Engineering:** By enriching the 200 raw temporal features with 30 window statistics (mean, std, max), we provided the model with "contextual awareness." This allowed the gradient booster to distinguish between momentary spikes (noise) and sustained system divergence (incident signature).
 
-### 2. Evaluation Strategy: Prioritizing Actionability
+### 2. Evaluation Strategy
 
 The initial evaluation used a standard **0.50 threshold**, which yielded a perfect precision (1.00) but a disastrous **recall of 0.10**. In a production environment, this represents a system that is "too quiet"—it only alerts when a total collapse is already occurring.
 
@@ -65,7 +65,7 @@ By utilizing the **Precision-Recall Curve**, we identified that the optimal deci
 
 This shift transformed the model from a lagging indicator into a **leading indicator**. We are now catching 8 out of 10 incidents before they fully manifest, with only a 9% false-alarm rate.
 
-### 3. Metric Significance & Interpretation
+### 3. Metric Significance 
 
 The feature importance graph validates the "Ground Truth" of our handcrafted dataset.
 
@@ -73,15 +73,21 @@ The feature importance graph validates the "Ground Truth" of our handcrafted dat
 * **Support Drivers:** `metric_4` and `metric_0` acted as secondary indicators.
 * **Temporal Logic:** The model didn't just look at the most recent timestamp; it weighted the **rolling statistics** heavily, proving that the *trend* of the metrics over the 20-step window was more predictive than any single point in time.
 
-### 4. Conclusion & Real-World Impact
+---
 
-The final model achieves an **F1-score of 0.86** on the incident class, which is exceptionally high for a dataset with only ~3% anomaly density.
+### 4. Conclusion
+
+The final model achieves an **F1-score of 0.86** on the incident class, which is good for a dataset with only ~3% anomaly density.
+
+---
 
 
 ### Key Results:
 
 * **Recall Targeted at 80%:** By optimizing the decision threshold using the PR-curve, the model successfully identifies 80% of all future incidents.
 * **Precision Optimization:** Once the 80% recall requirement was met, the threshold was calibrated to maximize Precision. This ensures that "Alert Noise" is minimized, protecting engineering teams from alert fatigue while still maintaining a robust safety net.
+
+---
 
 ### Feature Importance:
 
